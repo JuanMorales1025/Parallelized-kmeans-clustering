@@ -1,81 +1,81 @@
 # Parallelized K-means Clustering
 
-Este proyecto implementa el algoritmo de K-means de manera paralelizada utilizando un modelo maestro-esclavo para distribuir el trabajo entre varios procesos. 
+This project implements the K-means algorithm in a parallelized manner using a master-slave model to distribute the workload among multiple processes.
 
-## Estructura del proyecto
+## Project Structure
 
-El proyecto se divide en varios archivos:
+The project is divided into several files:
 
-- `master.py`: Contiene la clase `Master`, que coordina las operaciones y distribuye tareas a los esclavos.
-- `slave.py`: Contiene la clase `Slave`, que recibe tareas del maestro, las ejecuta y envía los resultados de vuelta.
-- `utils.py`: Contiene funciones auxiliares como la inicialización de centroides, asignación de clusters, actualización de centroides y visualización de resultados.
-- `main.py`: Punto de entrada del programa, donde se especifica si el nodo actual es un maestro o un esclavo.
+- `master.py`: Contains the `Master` class, which coordinates operations and distributes tasks to the slaves.
+- `slave.py`: Contains the `Slave` class, which receives tasks from the master, executes them, and sends the results back.
+- `utils.py`: Contains helper functions such as centroid initialization, cluster assignment, centroid update, and result visualization.
+- `main.py`: Entry point of the program, where the current node is specified as either a master or a slave.
 
-## Instalación
+## Installation
 
-1. Clona este repositorio:
+1. Clone this repository:
 
     ```bash
     git clone https://github.com/JuanMorales1025/parallelized-kmeans-clustering.git
     cd parallelized-kmeans-clustering
     ```
 
-2. Instala las dependencias necesarias:
+2. Install the required dependencies:
 
     ```bash
     pip install numpy pandas matplotlib scikit-learn
     ```
 
-## Ejecución del proyecto
+## Running the Project
 
-1. Asegúrate de tener un archivo de datos en `input_data/Online_Retail.xlsx`. Este archivo se utiliza para realizar el clustering.
+1. Ensure you have a data file at `input_data/Online_Retail.xlsx`. This file is used for clustering.
 
-2. Ejecuta el código principal dos veces: una vez para el maestro y una vez para cada esclavo. Por ejemplo, si tienes un maestro y un esclavo, ejecuta:
+2. Run the main code twice: once for the master and once for each slave. For example, if you have one master and one slave, run:
 
     ```bash
     python main.py master
     python main.py slave
     ```
 
-    Puedes ajustar el número de esclavos en el código según sea necesario.
+    You can adjust the number of slaves in the code as needed.
 
-## Descripción de las funciones clave
+## Description of Key Functions
 
-- `Master`: Clase que coordina la operación, distribuye datos a los esclavos y reúne resultados.
-- `Slave`: Clase que recibe tareas del maestro, realiza computaciones y envía resultados de vuelta.
-- `initCentroids(X, K)`: Inicializa los centroides usando K-means++.
-- `assignClusters(X, Centroids, K)`: Asigna cada punto de datos al cluster más cercano.
-- `updateCentroids(X, Centroids, K, cluster_assignation)`: Actualiza los centroides basándose en la asignación de clusters.
-- `plot_output(Output, Centroids, K)`: Visualiza los resultados del clustering.
+- `Master`: Class that coordinates the operation, distributes data to slaves, and gathers results.
+- `Slave`: Class that receives tasks from the master, performs computations, and sends results back.
+- `initCentroids(X, K)`: Initializes centroids using K-means++.
+- `assignClusters(X, Centroids, K)`: Assigns each data point to the nearest cluster.
+- `updateCentroids(X, Centroids, K, cluster_assignation)`: Updates the centroids based on cluster assignment.
+- `plot_output(Output, Centroids, K)`: Visualizes the clustering results.
 
-## Ejemplo de uso
+## Example Usage
 
-El algoritmo se ejecuta en paralelo, distribuyendo los datos entre los esclavos para asignar clusters y actualizando los centroides en cada iteración. Al final, los resultados se visualizan utilizando `matplotlib`.
+The algorithm runs in parallel, distributing data among slaves to assign clusters and updating the centroids in each iteration. In the end, the results are visualized using `matplotlib`.
 
-1. **Inicialización de centroides**:
+1. **Centroid Initialization**:
     ```python
     data_to_broadcast = initCentroids(df_values, K)
     ```
 
-2. **Asignación de clusters en paralelo**:
+2. **Cluster Assignment in Parallel**:
     ```python
     cluster_assignation = master.runSlaves(data_to_scatter, data_to_broadcast, assignClusters, K)
     ```
 
-3. **Actualización de centroides**:
+3. **Centroid Update**:
     ```python
     Output, data_to_broadcast = updateCentroids(df_values, data_to_broadcast, K, cluster_assignation)
     ```
 
-4. **Visualización**:
+4. **Visualization**:
     ```python
     plot_output(Output, Centroids, K)
     ```
 
-## Contribuciones
+## Contributions
 
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor haz un fork del repositorio y envía un pull request con tus cambios.
+Contributions are welcome. If you wish to contribute, please fork the repository and submit a pull request with your changes.
 
-## Licencia
+## License
 
-Este proyecto está licenciado bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
