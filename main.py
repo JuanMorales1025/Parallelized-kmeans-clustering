@@ -24,20 +24,13 @@ if __name__ == "__main__":
         K = 5 # Number of clusters
 
         # Data to be scattered
-        # file_name = "Mall_Customers.csv"
-        # input_data_path = f"input_data/{file_name}"
-        # df = pd.read_csv(input_data_path, encoding='UTF-8') #Filter the data if necessary
-        # df = df.iloc[:, [3, 4]]
-        # df_values = df.values
-        # data_to_scatter = df_values
-
-        df = pd.read_excel('input_data/Online_Retail.xlsx')
-        le = LabelEncoder()
-        df['Country'] = le.fit_transform(df['Country'])
-        df = df.iloc[:, [3, 5, 7]].dropna()
+        file_name = "Mall_Customers.csv"
+        input_data_path = f"input_data/{file_name}"
+        df = pd.read_csv(input_data_path, encoding='UTF-8') #Filter the data if necessary
+        df = df.iloc[:, [3, 4]]
         df_values = df.values
         data_to_scatter = df_values
-        
+
         # Data to be broadcasted 
         data_to_broadcast = initCentroids(df_values, K) # centroids initialization
 
